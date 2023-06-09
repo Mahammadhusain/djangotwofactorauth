@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Index | Page
+{% endblock title %}
+
+{% block body %}
+<h3>Hello, welcome <span class="text-danger"><i>{{request.user}}</i></span></h3> <span><a class="btn btn-success" href="{% url 'logout' %}">Logout</a></span>
+{% endblock body %}
