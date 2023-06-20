@@ -48,6 +48,10 @@ def SigninView(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         upass = request.POST.get('password')
+        if (email=="") or (upass==""):
+            messages.error(request, 'Missing email or password')
+            return redirect('/')
+        
         user = authenticate(email=email, password=upass)
         OtpModel.objects.filter(user=user).delete()
         print(user)
@@ -58,7 +62,7 @@ def SigninView(request):
             # login(request, user)
             messages.success(request, 'Please verify otp')
             otp_stuff = OtpModel.objects.create(user=user,otp=otp_provider())
-            send_otp_in_mail(user,otp_stuff)
+            # send_otp_in_mail(user,otp_stuff)
             return redirect('/otp/')
     else:
         if request.user.is_authenticated:
